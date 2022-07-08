@@ -36,7 +36,7 @@ stages:
         command: buildAndPush
         repository: $(imageFpmRepository)
         dockerfile: $(dockerfileFpmPath)
-        buildContext: ${Build.Repository}
+        buildContext: $(Build.Repository)
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
           $(tag)
@@ -46,7 +46,7 @@ stages:
         command: buildAndPush
         repository: $(imageNginxRepository)
         dockerfile: $(dockerfileNginxPath)
-        buildContext: ${Build.Repository}
+        buildContext: $(Build.Repository)
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
           $(tag)
