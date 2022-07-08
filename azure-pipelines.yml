@@ -35,7 +35,7 @@ stages:
       inputs:
         command: buildAndPush
         repository: $(imageFpmRepository)
-        dockerfile: $(dockerfileFpnPath)
+        dockerfile: $(dockerfileFpmPath)
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
           $(tag)
@@ -44,7 +44,7 @@ stages:
       inputs:
         command: buildAndPush
         repository: $(imageNginxRepository)
-        dockerfile: $(dockerfileFpnPath)
+        dockerfile: $(dockerfileNginxPath)
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
           $(tag)
