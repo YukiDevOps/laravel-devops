@@ -28,7 +28,6 @@ phpunit.xml
 readme.md
 phpspec.yml
 
-docker/**
 docker-compose.yml
 run
 run.ps1
