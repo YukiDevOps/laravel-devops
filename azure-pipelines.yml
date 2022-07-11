@@ -26,7 +26,7 @@ stages:
 - stage: Test
   displayName: Test and Publish Coverage
   jobs:
-    - job: PublishCoverage
+  - job: PublishCoverage
     displayName: 'Publish Coverage'
     pool:
       vmImage: $(vmImageName)
