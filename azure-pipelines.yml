@@ -28,6 +28,8 @@ stages:
   jobs:
     job: PublishCoverage
     displayName: 'Publish Coverage'
+    pool:
+      vmImage: $(vmImageName)
     steps:
     - task: PublishCodeCoverageResults@1
       inputs:
