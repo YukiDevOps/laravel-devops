@@ -25,9 +25,13 @@ variables:
 stages:
 - stage: Test
   displayName: Test and Publish Coverage
-  inputs:
-    codeCoverageTool: 'Cobertura'
-    summaryFileLocation: $(System.DefaultWorkingDirectory)/covertura-coverage.xml
+  jobs:
+    job: PublishCoverage
+    displayName: 'Publish Coverage'
+  - task: PublishCodeCoverageResults@1
+    inputs:
+      codeCoverageTool: 'Cobertura'
+      summaryFileLocation: $(System.DefaultWorkingDirectory)/covertura-coverage.xml
 - stage: Build
   displayName: Build and push stage
   jobs:
