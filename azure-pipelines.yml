@@ -47,23 +47,23 @@ stages:
       - script: ./vendor/bin/sail artisan test
         workingDirectory: $(Build.Repository.localPath)
         displayName: 'Run tests with phpunit'
-    - task: Docker@2
-      displayName: Build and push an image to container registry
-      inputs:
-        command: buildAndPush
-        repository: $(imageFpmRepository)
-        dockerfile: $(dockerfileFpmPath)
-        buildContext: $(Build.Repository.localPath)
-        containerRegistry: $(dockerRegistryServiceConnection)
-        tags: |
-          $(tag)
-    - task: Docker@2
-      displayName: Build and push an image to container registry
-      inputs:
-        command: buildAndPush
-        repository: $(imageNginxRepository)
-        dockerfile: $(dockerfileNginxPath)
-        buildContext: $(Build.Repository.localPath)
-        containerRegistry: $(dockerRegistryServiceConnection)
-        tags: |
-          $(tag)
+      - task: Docker@2
+        displayName: Build and push an image to container registry
+        inputs:
+          command: buildAndPush
+          repository: $(imageFpmRepository)
+          dockerfile: $(dockerfileFpmPath)
+          buildContext: $(Build.Repository.localPath)
+          containerRegistry: $(dockerRegistryServiceConnection)
+          tags: |
+            $(tag)
+      - task: Docker@2
+        displayName: Build and push an image to container registry
+        inputs:
+          command: buildAndPush
+          repository: $(imageNginxRepository)
+          dockerfile: $(dockerfileNginxPath)
+          buildContext: $(Build.Repository.localPath)
+          containerRegistry: $(dockerRegistryServiceConnection)
+          tags: |
+            $(tag)
