@@ -44,7 +44,7 @@ stages:
       - script: composer install --no-interaction --prefer-dist
         workingDirectory: $(Build.Repository.localPath)
         displayName: 'Composer install'
-      - script: ./vendor/bin/sail artisan test
+      - script: ./vendor/bin/phpunit
         workingDirectory: $(Build.Repository.localPath)
         displayName: 'Run tests with phpunit'
       - task: Docker@2
