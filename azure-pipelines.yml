@@ -15,7 +15,7 @@ variables:
   imageFpmRepository: 'laravel-app'
   imageNginxRepository: 'laravel-nginx'
   containerRegistry: 'crcontainerdev.azurecr.io'
-  dockerfileFpmPath: '$(Build.SourcesDirectory)/docker/fpm/Dockerfile'
+  dockerfileFpmPath: '$(Build.SourcesDirectory)/docker/8.1/Dockerfile'
   dockerfileNginxPath: '$(Build.SourcesDirectory)/docker/nginx/Dockerfile'
   tag: '$(Build.BuildId)'
   phpVersion: 8.1
@@ -32,6 +32,21 @@ stages:
     pool:
       vmImage: $(vmImageName)
     steps:
+      - script: |
+          sudo update-alternatives --set php /usr/bin/php$(phpVersion)
+          sudo update-alternatives --set phar /usr/bin/phar$(phpVersion)
+          sudo update-alternatives --set phpdbg /usr/bin/phpdbg$(phpVersion)
+          sudo update-alternatives --set php-cgi /usr/bin/php-cgi$(phpVersion)
+          sudo update-alternatives --set phar.phar /usr/bin/phar.phar$(phpVersion)
+          php -version
+        workingDirectory: $(rootFolder)
+        displayName: 'Use PHP version $(phpVersion)'
+
+      - script: composer install --no-interaction --prefer-dist
+        workingDirectory: $(rootFolder)
+        displayName: 'Composer install'
+      - script: ./phpunit
+        displayName: 'Run tests with phpunit'
     - task: Docker@2
       displayName: Build and push an image to container registry
       inputs:

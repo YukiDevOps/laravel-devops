@@ -45,6 +45,6 @@ WORKDIR /var/www
 USER www-data
 
 COPY --chown=www-data:www-data . /var/www
-RUN composer install --optimize-autoloader --no-dev && sh php artisan test
+RUN composer install --optimize-autoloader --no-dev && pwd && ls && /var/www/vendor/bin/phpnuit
 
 CMD ["sh", "-c", "php artisan config:cache --quiet; php artisan route:cache --quiet; php-fpm"]
