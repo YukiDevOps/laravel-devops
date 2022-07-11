@@ -18,7 +18,6 @@ variables:
   dockerfileFpmPath: '$(Build.SourcesDirectory)/docker/8.1/Dockerfile'
   dockerfileNginxPath: '$(Build.SourcesDirectory)/docker/nginx/Dockerfile'
   tag: '$(Build.BuildId)'
-  phpVersion: 8.1
 
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
@@ -32,38 +31,23 @@ stages:
     pool:
       vmImage: $(vmImageName)
     steps:
-      - script: |
-          sudo update-alternatives --set php /usr/bin/php$(phpVersion)
-          sudo update-alternatives --set phar /usr/bin/phar$(phpVersion)
-          sudo update-alternatives --set phpdbg /usr/bin/phpdbg$(phpVersion)
-          sudo update-alternatives --set php-cgi /usr/bin/php-cgi$(phpVersion)
-          sudo update-alternatives --set phar.phar /usr/bin/phar.phar$(phpVersion)
-          php -version
-        workingDirectory: $(Build.Repository.localPath)
-        displayName: 'Use PHP version $(phpVersion)'
-      - script: composer install --no-interaction --prefer-dist
-        workingDirectory: $(Build.Repository.localPath)
-        displayName: 'Composer install'
-      - script: ./vendor/bin/phpunit
-        workingDirectory: $(Build.Repository.localPath)
-        displayName: 'Run tests with phpunit'
-      - task: Docker@2
-        displayName: Build and push an image to container registry
-        inputs:
-          command: buildAndPush
-          repository: $(imageFpmRepository)
-          dockerfile: $(dockerfileFpmPath)
-          buildContext: $(Build.Repository.localPath)
-          containerRegistry: $(dockerRegistryServiceConnection)
-          tags: |
-            $(tag)
-      - task: Docker@2
-        displayName: Build and push an image to container registry
-        inputs:
-          command: buildAndPush
-          repository: $(imageNginxRepository)
-          dockerfile: $(dockerfileNginxPath)
-          buildContext: $(Build.Repository.localPath)
-          containerRegistry: $(dockerRegistryServiceConnection)
-          tags: |
-            $(tag)
+    - task: Docker@2
+      displayName: Build and push an image to container registry
+      inputs:
+        command: buildAndPush
+        repository: $(imageFpmRepository)
+        dockerfile: $(dockerfileFpmPath)
+        buildContext: $(Build.Repository.localPath)
+        containerRegistry: $(dockerRegistryServiceConnection)
+        tags: |
+          $(tag)
+    - task: Docker@2
+      displayName: Build and push an image to container registry
+      inputs:
+        command: buildAndPush
+        repository: $(imageNginxRepository)
+        dockerfile: $(dockerfileNginxPath)
+        buildContext: $(Build.Repository.localPath)
+        containerRegistry: $(dockerRegistryServiceConnection)
+        tags: |
+          $(tag)
