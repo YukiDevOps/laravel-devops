@@ -28,11 +28,11 @@ stages:
   jobs:
     job: PublishCoverage
     displayName: 'Publish Coverage'
-  steps:
-  - task: PublishCodeCoverageResults@1
-    inputs:
-      codeCoverageTool: 'Cobertura'
-      summaryFileLocation: $(System.DefaultWorkingDirectory)/covertura-coverage.xml
+    steps:
+    - task: PublishCodeCoverageResults@1
+      inputs:
+        codeCoverageTool: 'Cobertura'
+        summaryFileLocation: $(System.DefaultWorkingDirectory)/covertura-coverage.xml
 - stage: Build
   displayName: Build and push stage
   jobs:
@@ -41,9 +41,6 @@ stages:
     pool:
       vmImage: $(vmImageName)
     steps:
-    - task: PublishCodeCoverageResult@1
-      inputs:
-        - codeCoverageTool
     - task: Docker@2
       displayName: Build and push an image to container registry
       inputs:
