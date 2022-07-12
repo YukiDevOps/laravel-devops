@@ -31,6 +31,12 @@ stages:
     pool:
       vmImage: $(vmImageName)
     steps:
+    - script: |
+        docker build -f Docker/fpm/Dockerfile -t $(dockerId)/laravel-fpm:$BUILD_BUILDID .
+        docker run ---name laravel-fpm --rm -d $(dockerId)/laravel-fpm:$BUILD_BUILDID
+        docker cp . $(system.DefaultWorkingDirectory)
+        docker exec -it laravel-fpm php artisan test
+        docker stop laravel-fpm
     - task: PublishCodeCoverageResults@1
       inputs:
         codeCoverageTool: 'Cobertura'
