@@ -33,14 +33,13 @@ stages:
     steps:
     - script: |
         docker build -f docker/fpm/Dockerfile -t laravel-fpm:$BUILD_BUILDID .
-        docker run --name laravel-fpm --rm -d laravel-fpm:$BUILD_BUILDID
-        docker cp . $(system.DefaultWorkingDirectory)
+        docker run --name laravel-fpm --rm -d --mount $PWD:$(system.DefaultWorkingDirectory) laravel-fpm:$BUILD_BUILDID
         docker exec -it laravel-fpm php artisan test
         docker stop laravel-fpm
     - task: PublishCodeCoverageResults@1
       inputs:
         codeCoverageTool: 'Cobertura'
-        summaryFileLocation: $(System.DefaultWorkingDirectory)/covertura-coverage.xml
+        summaryFileLocation: $(System.Defadodo`do`dodultWorkingDirectory)/covertura-coverage.xml
 - stage: Build
   displayName: Build and push stage
   jobs:
