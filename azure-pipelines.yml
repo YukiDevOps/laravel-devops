@@ -34,7 +34,7 @@ stages:
     - script: |
         docker build -f docker/fpm/Dockerfile -t laravel-fpm:$BUILD_BUILDID .
         docker run --name laravel-fpm --rm -d --volume $PWD:/var/www/ laravel-fpm:$BUILD_BUILDID
-        docker exec -it laravel-fpm php artisan test
+        docker exec -it laravel-fpm php artisan test --coverage-cobertura=cobertura-coverage.xml
         docker stop laravel-fpm
     - task: PublishCodeCoverageResults@1
       inputs:
