@@ -32,7 +32,7 @@ stages:
       vmImage: $(vmImageName)
     steps:
     - script: |
-        docker build -f Docker/fpm/Dockerfile -t laravel-fpm:$BUILD_BUILDID .
+        docker build -f docker/fpm/Dockerfile -t laravel-fpm:$BUILD_BUILDID .
         docker run ---name laravel-fpm --rm -d laravel-fpm:$BUILD_BUILDID
         docker cp . $(system.DefaultWorkingDirectory)
         docker exec -it laravel-fpm php artisan test
