@@ -15,7 +15,7 @@ variables:
   imageFpmRepository: 'laravel-app'
   imageNginxRepository: 'laravel-nginx'
   containerRegistry: 'crcontainerdev.azurecr.io'
-  dockerfileFpmPath: '$(Build.SourcesDirectory)/docker/8.1/Dockerfile'
+  dockerfileFpmPath: '$(Build.SourcesDirectory)/docker/fpm/Dockerfile'
   dockerfileNginxPath: '$(Build.SourcesDirectory)/docker/nginx/Dockerfile'
   tag: '$(Build.BuildId)'
 
