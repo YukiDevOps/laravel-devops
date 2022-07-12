@@ -36,7 +36,7 @@ stages:
         docker run --name laravel-fpm --rm -d --volume $PWD:/var/www/ laravel-fpm:$BUILD_BUILDID
         docker exec -it laravel-fpm php artisan test --log-junit TEST.xml
         docker stop laravel-fpm
-    - task: PublishCodeCoverageResults@2
+    - task: PublishTestResults@2
       inputs:
         testResultsFormat: 'JUnit'
         testResultsFiles: $(System.DefaultWorkingDirectory)/TEST*.xml
