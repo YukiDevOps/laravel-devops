@@ -15,7 +15,21 @@ spec:
         app: laravel-app
     spec:
       containers:
-        - name: laravel
-          image: laravelsail/php81-composer
+        - name: laravel-nginx
+          image: crcontainerdev.azurecr.io/laravel-nginx
           ports:
             - containerPort: 80
+          volumeMounts:
+            - name: secrets-store01-inline
+              mountPath: "/mnt/secrets-store"
+              readOnly: true
+        - name: laravel-app
+          image: crcontainerdev.azurecr.io/laravel-app
+          port
+volumes:
+  - name: secrets-store01-inline
+    csi:
+      driver: secrets-store.csi.k8s.io
+      readOnly: true
+      volumeAttributes:
+        secretProviderClass: "azure-kvname-podid"
