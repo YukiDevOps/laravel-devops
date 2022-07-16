@@ -25,7 +25,8 @@ spec:
               readOnly: true
         - name: laravel-app
           image: crcontainerdev.azurecr.io/laravel-app
-          port
+          ports:
+            - containerPort: 9000
 volumes:
   - name: secrets-store01-inline
     csi:
